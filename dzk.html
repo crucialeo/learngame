@@ -14,65 +14,7 @@
     <script>
         var log = console.log.bind(console)
 
-        var imgFromPath = function (path) {
-            var img = new Image();
-            img.src = path
-            return img
-        }
 
-        var Paddle = function() {
-            var image = imgFromPath('paddle.png')
-            var o = {
-                image: image,
-                x: 0,
-                y: 200,
-                speed: 5,
-            }
-            return o
-        }
-
-        var __main = function() {
-            var canvas = document.querySelector('#id-canvas')
-            var context = canvas.getContext('2d')
-
-            var paddle = Paddle()
-
-            var leftKeydown = false
-            var rightKeydown = false
-
-            // events
-            window.addEventListener('keydown', function (e) {
-                var k = e.key
-                if (k == 'a') {
-                    leftKeydown = true
-                } else if (k == 'd') {
-                    rightKeydown = true
-                }
-            })
-
-            window.addEventListener('keyup', function (e) {
-                var k = e.key
-                if (k == 'a') {
-                    leftKeydown = false
-                } else if (k == 'd') {
-                    rightKeydown = false
-                }
-            })
-
-            setInterval(function () {
-                // update
-                if (leftKeydown) {
-                    paddle.x -= paddle.speed
-                } else if (rightKeydown) {
-                    paddle.x += paddle.speed
-                }
-                // draw
-                context.clearRect(0, 0, 400, 300)
-                context.drawImage(paddle.image, paddle.x, paddle.y)
-            }, 1000/30)
-        }
-
-        __main()
     </script>
 </body>
 </html>

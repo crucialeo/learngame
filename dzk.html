@@ -38,16 +38,43 @@
         }
 
         var GuaGame = function () {
-            var g = {}
+            var g = {
+                actions: {},
+                keydowns: {},
+            }
             var canvas = document.querySelector('#id-canvas')
             var context = canvas.getContext('2d')
 
             g.canvas = canvas
             g.context = context
 
+            // events
+            window.addEventListener('keydown', function (event) {
+                g.keydowns[event.key] = true
+            })
+
+            window.addEventListener('keyup', function (event) {
+                g.keydowns[event.key] = false
+            })
+
+            g.registerAction = function(key, callback) {
+                g.actions[key] = callback
+            }
+
+            // 注册就是，这里的方法没有定义，在外面定义，在这里调用
             setInterval(function () {
-                // update
+                // events
+                var actions = Object.keys(g.actions)
+                for (var i = 0; i < actions.length; i++) {
+                    var key = actions[i]
+                    if (g.keydowns[key]) {
+                        // 如果按键被按下，调用注册的 actioin
+                        g.actions[key]()
+                    }
+                }
+
                 g.update()
+
                 // clear
                 context.clearRect(0, 0, canvas.width, canvas.height)
                 // draw
@@ -62,33 +89,17 @@
 
             var paddle = Paddle()
 
-            var leftDown = false
-            var rightDown = false
 
-            window.addEventListener('keydown', function (event) {
-                var k = event.key
-                if (k == 'a') {
-                    leftDown = true
-                } else if (k == 'd') {
-                    rightDown = true
-                }
+            game.registerAction('a', function () {
+                paddle.moveLeft()
             })
 
-            window.addEventListener('keyup', function (event) {
-                var k = event.key
-                if (k == 'a') {
-                    leftDown = false
-                } else if (k == 'd') {
-                    rightDown = false
-                }
+            game.registerAction('d', function () {
+                paddle.moveRight()
             })
 
             game.update = function() {
-                if (leftDown) {
-                    paddle.moveLeft()
-                } else if (rightDown) {
-                    paddle.moveRight()
-                }
+
             }
 
             game.draw = function() {

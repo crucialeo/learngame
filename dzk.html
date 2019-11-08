@@ -48,6 +48,11 @@
             g.canvas = canvas
             g.context = context
 
+            // draw
+            g.drawImage = function(guaImage) {
+                g.context.drawImage(guaImage.image, guaImage.x, guaImage.y)
+            }
+
             // events
             window.addEventListener('keydown', function (event) {
                 g.keydowns[event.key] = true
@@ -103,7 +108,7 @@
             }
 
             game.draw = function() {
-                game.context.drawImage(paddle.image, paddle.x, paddle.y)
+                game.drawImage(paddle)
             }
         }
 

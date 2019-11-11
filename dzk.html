@@ -74,6 +74,16 @@
             return o
         }
 
+        var Block = function () {
+            var image = imageFromPath('block.png')
+            var o = {
+                image: image,
+                x: 100,
+                y: 100,
+            }
+            return o
+        }
+
         var GuaGame = function () {
             var g = {
                 actions: {},
@@ -131,6 +141,7 @@
 
             var paddle = Paddle()
             var ball = Ball()
+            var block = Block()
 
 
             game.registerAction('a', function () {
@@ -155,6 +166,7 @@
             game.draw = function() {
                 game.drawImage(paddle)
                 game.drawImage(ball)
+                game.drawImage(block)
             }
         }
 

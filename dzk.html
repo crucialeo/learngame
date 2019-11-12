@@ -74,12 +74,28 @@
             return o
         }
 
+        var rectIntersects = function (a, b) {
+            if (b.y > a.y && b.y < a.y + a.image.height) {
+                if (b.x > a.x && b.x < a.x + a.image.width) {
+                    return true
+                }
+            }
+            return false
+        }
+
         var Block = function () {
             var image = imageFromPath('block.png')
             var o = {
                 image: image,
                 x: 100,
                 y: 100,
+                alive: true,
+            }
+            o.kill = function () {
+                o.alive = false
+            }
+            o.collide = function (b) {
+                return rectIntersects(o, b) || rectIntersects(b, o)
             }
             return o
         }
@@ -158,15 +174,23 @@
 
             game.update = function() {
                 ball.move()
+                // 判断 ball 和 paddle 相撞
                 if (paddle.collide(ball)) {
                     ball.speedY *= -1
+                }
+                // 判断 ball 和 block 相撞
+                if (block.collide(ball)) {
+                    log('collide')
+                    block.kill()
                 }
             }
 
             game.draw = function() {
                 game.drawImage(paddle)
                 game.drawImage(ball)
-                game.drawImage(block)
+                if (block.alive) {
+                    game.drawImage(block)
+                }
             }
         }
 

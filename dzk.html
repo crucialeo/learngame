@@ -71,6 +71,9 @@
                     o.y += o.speedY
                 }
             }
+            o.bounce = function () {
+                o.speedY *= -1
+            }
             return o
         }
 
@@ -176,12 +179,13 @@
                 ball.move()
                 // 判断 ball 和 paddle 相撞
                 if (paddle.collide(ball)) {
-                    ball.speedY *= -1
+                    ball.bounce()
                 }
                 // 判断 ball 和 block 相撞
                 if (block.collide(ball)) {
                     log('collide')
                     block.kill()
+                    ball.bounce()
                 }
             }
 

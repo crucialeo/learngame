@@ -175,6 +175,7 @@
                 ball.fire()
             })
 
+            // update
             game.update = function() {
                 ball.move()
                 // 判断 ball 和 paddle 相撞
@@ -189,6 +190,7 @@
                 }
             }
 
+            // draw
             game.draw = function() {
                 game.drawImage(paddle)
                 game.drawImage(ball)
